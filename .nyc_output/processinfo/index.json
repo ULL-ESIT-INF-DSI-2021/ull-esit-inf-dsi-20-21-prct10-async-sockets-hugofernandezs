@@ -1,0 +1,1 @@
+{"processes":{"2f1b5e65-81a1-46f5-870e-93d99f5656d1":{"parent":"ff15f31d-5e47-47c2-86f4-02917636258a","children":[]},"ff15f31d-5e47-47c2-86f4-02917636258a":{"parent":null,"children":["2f1b5e65-81a1-46f5-870e-93d99f5656d1"]}},"files":{"/home/usuario/Pract10/src/models/NoteManager/Note.ts":["2f1b5e65-81a1-46f5-870e-93d99f5656d1"]},"externalIds":{}}
