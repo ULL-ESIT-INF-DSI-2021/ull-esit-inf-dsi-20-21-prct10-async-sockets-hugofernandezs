@@ -7,14 +7,9 @@ import {Note, Color} from '../NoteManager/Note';
 
 const server = net.createServer((connection) => {
   console.log('\nServidor conectado\n');
-
   const emitter = new ServerEventEmitter(connection);
-
   let accion: boolean = true;
 
-  /**
-   * Manejador para cuando el objeto ServerEventEmitter emite el evento 'request'
-   */
   emitter.on('request', (mensaje) => {
     const nm = new NoteManager(mensaje.user);
     let respuesta: ResponseType;
@@ -158,17 +153,12 @@ const server = net.createServer((connection) => {
     }
   });
 
-  /**
-   * Manejador para cuando el socket emite el evento close (Cuando se desconecta un cliente)
-   */
+
   connection.on('close', () => {
     console.log('Un cliente se ha desconectado\n');
   });
 });
 
-/**
- * Se pone el server a escuchar en el puerto 60300
- */
 server.listen(2020, () => {
   console.log('\nEsperando a que los clientes se conecten\n');
 });
