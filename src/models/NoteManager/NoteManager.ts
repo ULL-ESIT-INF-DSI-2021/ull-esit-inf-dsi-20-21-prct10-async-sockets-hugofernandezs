@@ -57,6 +57,17 @@ import {Color, Note} from './Note';
    */
   public set name(newName: string){
     this.name_ = newName;
+    if (this.fs_.existsSync(`data/${this.name}`)) {
+      const files = this.fs_.readdirSync(`data/${this.name}`);
+
+      files.forEach((file: any) => {
+        const data = this.fs_.readFileSync(`data/${this.name}/${file}`);
+        const noteJson: Note = JSON.parse(data.toString());
+        this.notes_.push(new Note(noteJson.title, noteJson.color, noteJson.body));
+      });
+    } else {
+      this.fs_.mkdirSync(`data/${this.name}`);
+    }
   }
 
   /**
@@ -120,7 +131,7 @@ import {Color, Note} from './Note';
    * @returns True if the note is removed. False if its not.
    */
   public removeNote(title: string) {
-    if (this.fs_.existsSync(`data/${this.name}/${title}.json`)) {
+    if (!this.fs_.existsSync(`data/${this.name}/${title}.json`)) {
       return false;
     } else {
       let indice: number = 0;
@@ -149,7 +160,6 @@ import {Color, Note} from './Note';
           return note;
         }
       });
-    }
-    return undefined;
+    } 
   }
 }
