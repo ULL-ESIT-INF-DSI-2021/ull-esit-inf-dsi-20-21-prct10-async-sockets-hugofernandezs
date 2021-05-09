@@ -4,15 +4,13 @@ import chalk from 'chalk';
 import {ResponseType, RequestType} from '../types';
 import {ClientEventEmitter} from './ClientEventEmitter';
 
+
 if (process.argv.length < 3) {
-  console.log('\nNo se ha especificado ningún comando por la línea de comandos\n');
+  console.log('\nIntroduzca un comando.\n');
 } else {
   const client = net.connect({port: 2020});
   const emitter = new ClientEventEmitter(client);
 
-  /**
-   * Manejador para cuando el objeto ClientEventEmitter emite el evento 'response'
-   */
   emitter.on('response', (respuesta: ResponseType) => {
     switch (respuesta.type) {
       case 'add':
@@ -50,7 +48,7 @@ if (process.argv.length < 3) {
       case 'list':
         console.log("\nYour notes\n");
         if (respuesta.notes == undefined || respuesta.notes == []) {
-          console.log(chalk.red(`The user haven't notes`));
+          console.log(chalk.red(`No notes found`));
         } else {
           respuesta.notes.forEach((nota) => {
             switch (nota.color) {
@@ -108,9 +106,6 @@ if (process.argv.length < 3) {
     }
   });
 
-  /**
-   * Comando add, sirve para añadir nuevas notas a un usuario
-   */
   yargs.command( {
     command: 'add',
     describe: 'Add a new note',
@@ -155,9 +150,7 @@ if (process.argv.length < 3) {
     },
   });
 
-  /**
-   * Comando update, sirve para modificar una nota concreta de un usuario
-   */
+
   yargs.command( {
     command: 'update',
     describe: 'Update a note',
@@ -214,9 +207,6 @@ if (process.argv.length < 3) {
     },
   });
 
-  /**
-   * Comando remove, sirve para borrar una nota concreta de un usuario
-   */
   yargs.command( {
     command: 'remove',
     describe: 'Remove a note',
@@ -249,9 +239,6 @@ if (process.argv.length < 3) {
     },
   });
 
-  /**
-   * Comando list, sirve para listar las notas de un usuario
-   */
   yargs.command( {
     command: 'list',
     describe: 'List notes of a concrect user',
@@ -278,9 +265,6 @@ if (process.argv.length < 3) {
     },
   });
 
-  /**
-   * Comando read, sirve para leer una nota concreta de un usuario
-   */
   yargs.command( {
     command: 'read',
     describe: 'Read a note',
