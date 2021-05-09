@@ -107,39 +107,31 @@ import {Color, Note} from './Note';
    * @returns 
    */
    public editNote(noteTitle: string, field: string, newValue: string | Color) {
-    const ficheroExiste: boolean = this.fs_.existsSync(`data/${this.name}/${noteTitle}.json`);
-
-    if (ficheroExiste == false) {
+    if (!this.fs_.existsSync(`data/${this.name}/${noteTitle}.json`)) {
       return false;
     } else {
-      const contenidoNota = this.fs_.readFileSync(`data/${this.name}/${noteTitle}.json`);
-      const dataJson = JSON.parse(contenidoNota.toString());
+      const dataJson = JSON.parse(this.fs_.readFileSync(`data/${this.name}/${noteTitle}.json`).toString());
 
-      let indice: number = 0;
-      let i = 0;
-      this.notes.forEach((nota) => {
-        if (nota.title == noteTitle) {
-          indice = i;
+      this.notes.forEach((note) => {
+        if (note.title == noteTitle) {
+          if (field === "title") {
+            note.title = newValue;
+            this.fs_.renameSync(`data/${this.name}/${noteTitle}.json`, `data/${this.name}/${newValue}.json`);
+            this.fs_.writeFileSync(`data/${this.name}/${newValue}.json`, new Note(newValue, dataJson.color, dataJson.body).getJSON());
+            return true;
+          }
+          if (field === "body") {
+            note.body = newValue;
+            this.fs_.writeFileSync(`data/${this.name}/${dataJson.title}.json`, new Note(dataJson.title, dataJson.color, newValue).getJSON());
+            return true;
+          }
+          if ((field === "color") && (typeof newValue != "string")) {
+            note.color = newValue;
+            this.fs_.writeFileSync(`data/${this.name}/${dataJson.title}.json`, new Note(dataJson.title, newValue, dataJson.body).getJSON());
+            return true;
+          }
         }
-        i++;
       });
-
-      if (field === "titulo") {
-        this.notes[indice].title = newValue;
-        this.fs_.renameSync(`data/${this.name}/${noteTitle}.json`, `data/${this.name}/${newValue}.json`);
-        this.fs_.writeFileSync(`data/${this.name}/${newValue}.json`, new Note(newValue, dataJson.color, dataJson.cuerpo).getJSON());
-      }
-
-      if (field === "cuerpo") {
-        this.notes[indice].body = newValue;
-        this.fs_.writeFileSync(`data/${this.name}/${dataJson.titulo}.json`, new Note(dataJson.title, dataJson.color, newValue).getJSON());
-      }
-
-      if ((field === "color") && (typeof newValue != "string")) {
-        this.notes[indice].color = newValue;
-        this.fs_.writeFileSync(`data/${this.name}/${dataJson.titulo}.json`, new Note(dataJson.title, newValue, dataJson.cuerpo).getJSON());
-      }
-
       return true;
     }
   }
@@ -167,15 +159,15 @@ import {Color, Note} from './Note';
 
   /**
    * Reads a note.
-   * @param titulo Note to read. 
+   * @param title Note to read. 
    * @returns A string with the note. Or undefined.
    */
-  public getNote(titulo: string): Note | undefined {
-    if (!this.fs_.existsSync(`data/${this.name}/${titulo}.json`)) {
+  public getNote(title: string): Note | undefined {
+    if (!this.fs_.existsSync(`data/${this.name}/${title}.json`)) {
       return undefined;
     } else {
       this.notes_.forEach((note) => {
-        if (note.title == titulo) {
+        if (note.title == title) {
           return note;
         }
       });

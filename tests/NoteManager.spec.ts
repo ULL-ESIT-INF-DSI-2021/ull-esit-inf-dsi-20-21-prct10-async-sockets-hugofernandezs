@@ -43,8 +43,10 @@ describe('Funcionamiento de la clase NoteManager:', () => {
       expect(nm.getNote(note2.title)).to.be.equal(undefined);
     });
     it('Se puede editar una nota', () => {
-      expect(nm.editNote(note1.title, note1.title, note1.color, note2.body)).to.be.equal(true);
-      expect(nm.editNote(note2.title, note1.title, note1.color, note2.body)).to.be.equal(false);
+      expect(nm.editNote(note1.title, "color", note2.color, )).to.be.equal(true);
+      expect(nm.editNote(note1.title, "color", note1.color)).to.be.equal(true);
+      expect(nm.editNote(note1.title, "body", note2.body, )).to.be.equal(true);
+      expect(nm.editNote(note1.title, "body", note1.body)).to.be.equal(true);
     });
     it('Se analiza todo el directorio', () => {
       const aux = new NoteManager(user1);
