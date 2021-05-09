@@ -1,0 +1,14 @@
+{
+	"notes":  [
+		{
+			"title_": "Nota1",
+			"color_": "red",
+			"body_": "Cuerpo 1"
+		},
+		{
+			"title_": "Nota2",
+			"color_": "blue",
+			"body_": "Cuerpo2"
+		}
+	]
+}

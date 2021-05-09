@@ -71,7 +71,7 @@ export class Note {
   }
 
 
-  /******************** SETTERS ********************/
+  /********************  SETTERS  ********************/
   
   /**
    * Sets a new note tittle.
