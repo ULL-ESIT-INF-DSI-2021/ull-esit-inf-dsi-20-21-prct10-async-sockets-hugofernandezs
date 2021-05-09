@@ -13,6 +13,12 @@
 </p>
 
 
+## **OBJETIVO DE LA PRÁCTICA**
+El objetivo de la práctica consiste en realizar una serie de problemas propuestos y resolverlos usando TypeScript para familiarizarnos con el lenguaje y su funcionamiento.
+
+En esta práctica nos centraremos especialmente en la creación del servidor y del cliente así como del uso de los EventEmitter. AUnque también trabajaremos con la línea de comandos y el sistema de archivos de Node.js
+
+
 ## Enunciado
 Los requisitos que debe cumplir la aplicación de procesamiento de notas de texto son los enumerados a continuación:
 
@@ -640,3 +646,11 @@ export class ServerEventEmitter extends EventEmitter {
   }
 }
 ```
+
+## Conclusión
+
+Este sería el resumen de la aplicación. Cabe destacar que tanto el clinte como el servidor deben ejecutarse en distintas terminales y al mismo tiempo para su funcionamiento.
+
+La implementación de un servidor en typescript es relativamente sencilla y úitil comparado con otros lenguajes de programación. Además el uso de objetos EventEmitter hace que la comunicación entre procesos sea mucho más sencilla y te da un amplio abanico de posibilidades a la hora de elegir los eventos disponibles.
+
+No he conseguido que se termine de ejecutar el programa. Cuando realizo alguna petición esta llega al servidor pero no está llegando ningún mensaje de vuelta al cliente. Sería el siguiente error a corregir.
