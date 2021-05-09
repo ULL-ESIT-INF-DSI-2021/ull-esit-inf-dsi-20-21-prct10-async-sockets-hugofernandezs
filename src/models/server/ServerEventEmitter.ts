@@ -5,7 +5,6 @@ import net from 'net';
  * Conects the server with the client.
  */
 export class ServerEventEmitter extends EventEmitter {
-  //private server_ = require('net.Server');
 
   /**
    * Initialices the connection.

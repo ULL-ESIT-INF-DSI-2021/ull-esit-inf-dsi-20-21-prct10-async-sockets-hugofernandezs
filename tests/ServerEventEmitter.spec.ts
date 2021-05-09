@@ -1,7 +1,7 @@
 import 'mocha';
 import {expect} from 'chai';
 import {EventEmitter} from 'events';
-import {ServerEventEmitter} from '../src/models/server/ServerEventEmmitter';
+import {ServerEventEmitter} from '../src/models/server/ServerEventEmitter';
 import {RequestType} from '../src/models/types';
 
 
