@@ -19,7 +19,7 @@ El objetivo de la práctica consiste en realizar una serie de problemas propuest
 En esta práctica nos centraremos especialmente en la creación del servidor y del cliente así como del uso de los EventEmitter. AUnque también trabajaremos con la línea de comandos y el sistema de archivos de Node.js
 
 
-## Enunciado
+## **ENUNCIADO**
 Los requisitos que debe cumplir la aplicación de procesamiento de notas de texto son los enumerados a continuación:
 
 1. La aplicación de notas deberá permitir que múltiples usuarios interactúen con ella.
@@ -80,7 +80,7 @@ No note found
 ```
 
 
-## Consejos sobre la implementación
+## **CONSEJOS SOBRE LA IMPLEMENTACIÓN**
 
 - Tendrá que implementar lo que se conoce como el patrón petición-respuesta, es decir, el cliente lleva a cabo una petición al servidor conectándose al mismo, el servidor procesa la petición, prepara y envía una respuesta de vuelta al cliente, cierra la conexión con el cliente y el cliente procesa la respuesta recibida.
 
@@ -110,7 +110,7 @@ export type ResponseType = {
 ```
 
 
-## Desarrollo
+## **DESARROLLO**
 
 Para el desarrollo de esta práctica hemos utilizado la práctica 8 de manejo de notas. Puede consultar el guión en este [enlace](https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct09-async-fs-process-hugofernandezs#readme). Además hemos creado una paqueña aplicación cliente-servidor que se encarge de manejar las peticiones del usuario. Además nos hemos apoyado en un tipo de datos que nosotros hemos creado para las peticiones y respuestas
 
@@ -647,7 +647,7 @@ export class ServerEventEmitter extends EventEmitter {
 }
 ```
 
-## Conclusión
+## **CONCLUSIÓN**
 
 Este sería el resumen de la aplicación. Cabe destacar que tanto el clinte como el servidor deben ejecutarse en distintas terminales y al mismo tiempo para su funcionamiento.
 
