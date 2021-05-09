@@ -1,6 +1,5 @@
 import 'mocha';
 import {expect} from 'chai';
-import chalk from 'chalk';
 import {NoteManager} from '../src/models/NoteManager/NoteManager';
 import {Color, Note} from '../src/models/NoteManager/Note';
 
@@ -56,4 +55,12 @@ describe('Funcionamiento de la clase NoteManager:', () => {
       expect(nm.removeNote(note2.title)).to.be.equal(false);
     });
   });
+  describe('Se puede eliminar un usuario:', () => {
+    it('Se elimina correctamente', () => {
+      const fs = require('fs');
+      fs.rmdirSync(`./data/${user1}`, { recursive: true });
+      fs.rmdirSync(`./data/${user2}`, { recursive: true });
+    });
+  });
 });
+
