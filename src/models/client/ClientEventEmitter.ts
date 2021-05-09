@@ -1,9 +1,9 @@
 import {EventEmitter} from 'events';
 
 /**
- * Conects the cliente with the server.
+ * Conects the client with the server.
  */
-export class EventEmitterClient extends EventEmitter {
+export class ClientEventEmitter extends EventEmitter {
   
   /**
    * Initialices the connection.
