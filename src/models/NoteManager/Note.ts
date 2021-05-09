@@ -33,6 +33,10 @@ export class Note {
     this.body_ = newBody;
   }
 
+  /**
+   * Formats the class in JSON format.
+   * @returns The class in JSON format.
+   */
   public getJSON(): string {
     let result: string = JSON.stringify(this);
     result = result.replace(/{/g, "{\n\t");
