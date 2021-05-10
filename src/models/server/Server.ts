@@ -1,4 +1,5 @@
 import net from 'net';
+import chalk from 'chalk';
 import {ResponseType} from '../types';
 import {ServerEventEmitter} from './ServerEventEmitter';
 import {NoteManager} from '../NoteManager/NoteManager';
@@ -8,90 +9,89 @@ import {Note, Color} from '../NoteManager/Note';
 const server = net.createServer((connection) => {
   console.log('\nServidor conectado\n');
   const emitter = new ServerEventEmitter(connection);
-  let accion: boolean = true;
+  //let action: boolean = true;
 
-  emitter.on('request', (mensaje) => {
-    const nm = new NoteManager(mensaje.user);
+  emitter.on('request', (message) => {
+    const nm = new NoteManager(message.user);
     let respuesta: ResponseType;
 
-    switch (mensaje.type) {
-      case 'add':
-        accion = nm.addNote(mensaje.title, mensaje.body, mensaje.color);
-
+    switch (message.type) {
+      case 'add': {
+        const action: boolean = nm.addNote(message.title, message.body, message.color);
         respuesta = {
           type: 'add',
-          success: accion,
+          success: action,
         };
 
         connection.write(`${JSON.stringify(respuesta)}\n`, () => {
-          if (respuesta.success == true) {
-            console.log(`Se ha procesado satisfactoriamente la petición "${respuesta.type}" del cliente y se ha enviado la respuesta.\n`);
+          if (respuesta.success) {
+            console.log(chalk.green(`Petición "${respuesta.type}" del cliente completada.\n`));
           } else {
-            console.log(`No se ha podido procesar la petición satisfactoriamente "${respuesta.type}" del cliente y se ha enviado la respuesta.\n`);
+            console.log(chalk.red(`Error al procesar la petición "${respuesta.type}" del cliente.\n`));
           }
           connection.end();
         });
         break;
-
+      }
       case 'update':
-        let salida = '';
-        if (typeof mensaje.newBody === 'string') {
-          accion = nm.editNote(mensaje.title, "cuerpo", mensaje.newBody);
+        let output = '';
+        if (typeof message.newBody === 'string') {
+          const action: boolean = nm.editNote(message.title, "cuerpo", message.newBody);
 
           respuesta = {
             type: 'update',
-            success: accion,
+            success: action,
             modified: 'body',
           };
 
-          salida = JSON.stringify(respuesta);
+          output = JSON.stringify(respuesta);
         }
-        if (typeof mensaje.newColor !== 'string') {
-          accion = nm.editNote(mensaje.title, "color", mensaje.newColor);
+        if (typeof message.newColor !== 'string') {
+          const action: boolean = nm.editNote(message.title, "color", message.newColor);
 
           respuesta = {
             type: 'update',
-            success: accion,
+            success: action,
             modified: 'color',
           };
 
-          salida = JSON.stringify(respuesta);
+          output = JSON.stringify(respuesta);
         }
-        if (typeof mensaje.newTitle === 'string') {
-          accion = nm.editNote(mensaje.title, "titulo", mensaje.newTitle);
+        if (typeof message.newTitle === 'string') {
+          const action: boolean = nm.editNote(message.title, "titulo", message.newTitle);
 
           respuesta = {
             type: 'update',
-            success: accion,
+            success: action,
             modified: 'title',
           };
 
-          salida = JSON.stringify(respuesta);
+          output = JSON.stringify(respuesta);
         }
 
-        connection.write(`${salida}\n`, () => {
+        connection.write(`${output}\n`, () => {
           if (respuesta.success == true) {
-            console.log(`Se ha procesado satisfactoriamente la petición "${respuesta.type}" del cliente y se ha enviado la respuesta.\n`);
+            console.log(chalk.green(`Petición "${respuesta.type}" del cliente completada.\n`));
           } else {
-            console.log(`No se ha podido procesar la petición satisfactoriamente "${respuesta.type}" del cliente y se ha enviado la respuesta.\n`);
+            console.log(chalk.red(`Error al procesar la petición "${respuesta.type}" del cliente.\n`));
           }
           connection.end();
         });
         break;
 
       case 'remove':
-        accion = nm.removeNote(mensaje.title);
+        const action: boolean = nm.removeNote(message.title);
 
         respuesta = {
           type: 'remove',
-          success: accion,
+          success: action,
         };
 
         connection.write(`${JSON.stringify(respuesta)}\n`, () => {
           if (respuesta.success == true) {
-            console.log(`Se ha procesado satisfactoriamente la petición "${respuesta.type}" del cliente y se ha enviado la respuesta.\n`);
+            console.log(chalk.green(`Petición "${respuesta.type}" del cliente completada.\n`));
           } else {
-            console.log(`No se ha podido procesar la petición satisfactoriamente "${respuesta.type}" del cliente y se ha enviado la respuesta.\n`);
+            console.log(chalk.red(`Error al procesar la petición "${respuesta.type}" del cliente.\n`));
           }
           connection.end();
         });
@@ -114,16 +114,16 @@ const server = net.createServer((connection) => {
 
         connection.write(`${JSON.stringify(respuesta)}\n`, () => {
           if (respuesta.success == true) {
-            console.log(`Se ha procesado satisfactoriamente la petición "${respuesta.type}" del cliente y se ha enviado la respuesta.\n`);
+            console.log(chalk.green(`Petición "${respuesta.type}" del cliente completada.\n`));
           } else {
-            console.log(`No se ha podido procesar la petición satisfactoriamente "${respuesta.type}" del cliente y se ha enviado la respuesta.\n`);
+            console.log(chalk.red(`Error al procesar la petición "${respuesta.type}" del cliente.\n`));
           }
           connection.end();
         });
         break;
 
       case 'read':
-        const nota: Note | undefined = nm.getNote(mensaje.title);
+        const nota: Note | undefined = nm.getNote(message.title);
         if (typeof nota !== "undefined") {
           respuesta = {
             type: 'read',
@@ -140,9 +140,9 @@ const server = net.createServer((connection) => {
 
         connection.write(`${JSON.stringify(respuesta)}\n`, () => {
           if (respuesta.success == true) {
-            console.log(`Se ha procesado satisfactoriamente la petición "${respuesta.type}" del cliente y se ha enviado la respuesta.\n`);
+            console.log(chalk.green(`Petición "${respuesta.type}" del cliente completada.\n`));
           } else {
-            console.log(`No se ha podido procesar la petición satisfactoriamente "${respuesta.type}" del cliente y se ha enviado la respuesta.\n`);
+            console.log(chalk.red(`Error al procesar la petición "${respuesta.type}" del cliente.\n`));
           }
           connection.end();
         });
@@ -155,10 +155,10 @@ const server = net.createServer((connection) => {
 
 
   connection.on('close', () => {
-    console.log('Un cliente se ha desconectado\n');
+    console.log(chalk.green('Un cliente se ha desconectado\n'));
   });
 });
 
 server.listen(2020, () => {
-  console.log('\nEsperando a que los clientes se conecten\n');
+  console.log(chalk.green('\nEsperando a que los clientes se conecten\n'));
 });
