@@ -15,40 +15,32 @@ if (process.argv.length < 3) {
     switch (respuesta.type) {
       case 'add':
         if (respuesta.success == true) {
-          console.log(chalk.green('\nNew note added!\n'));
+          console.log(chalk.green('\nSe ha añadido la nota correctamente.\n'));
         } else {
-          console.log(chalk.red("\nNote title taken!\n"));
+          console.log(chalk.red("\nNo se ha podido añadir la nota.\n"));
         }
         break;
 
       case 'update':
         if (respuesta.success == true) {
-          if (respuesta.modified == "title") {
-            console.log(chalk.green('\nNote title modified!\n'));
-          }
-          if (respuesta.modified == "body") {
-            console.log(chalk.green('\nNote body modified!\n'));
-          }
-          if (respuesta.modified == "color") {
-            console.log(chalk.green('\nNote color modified!\n'));
-          }
+          console.log(chalk.green('\nSe ha modificado la nota correctamente.\n'));
         } else {
-          console.log(chalk.red("\nNo note found\n"));
+          console.log(chalk.red("\nNo se ha podido modificar la nota.\n"));
         }
         break;
 
       case 'remove':
         if (respuesta.success == true) {
-          console.log(chalk.green('\nNote removed!\n'));
+          console.log(chalk.green('\nSe ha eliminado la nota correctamente.\n'));
         } else {
-          console.log(chalk.red("\nNo note found\n"));
+          console.log(chalk.red("\nNo se ha podido eliminar la nota.\n"));
         }
         break;
 
       case 'list':
-        console.log("\nYour notes\n");
+        console.log("\nNotas en la lista:\n");
         if (respuesta.notes == undefined || respuesta.notes == []) {
-          console.log(chalk.red(`No notes found`));
+          console.log(chalk.red(`No se han encontrado notas.`));
         } else {
           respuesta.notes.forEach((nota) => {
             switch (nota.color) {
